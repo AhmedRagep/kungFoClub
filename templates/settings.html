@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block page %}settings{% endblock %}
+{% block title %}الإعدادات — {{ club_name }}{% endblock %}
+
+{% block body %}
+<header class="topbar">
+  <div class="shell">
+    <div class="topbar-row">
+      <a class="icon-btn" href="/" aria-label="رجوع">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <div class="brand">
+        <div style="min-width:0">
+          <div class="brand-name">الإعدادات والتقارير</div>
+          <div class="brand-sub" id="monthName">…</div>
+        </div>
+      </div>
+      <form method="post" action="/logout/" style="margin:0">
+        {% csrf_token %}
+        <button class="icon-btn" type="submit" title="تسجيل الخروج" aria-label="تسجيل الخروج">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="section-title">الأسعار</div>
+  <div class="card">
+    <div class="field">
+      <label>اسم النادي</label>
+      <input id="sClub" placeholder="نادي الكونغ فو">
+    </div>
+    <div class="grid-2">
+      <div class="field">
+        <label>اشتراك الشهر</label>
+        <input id="sMonthly" type="number" inputmode="decimal" step="any">
+      </div>
+      <div class="field">
+        <label>سعر الحصة</label>
+        <input id="sSession" type="number" inputmode="decimal" step="any">
+      </div>
+    </div>
+    <div class="field">
+      <label>العملة</label>
+      <input id="sCurrency" placeholder="ج.م">
+      <div class="hint">التغيير هنا بيطبّق على كل اللاعبين، ما عدا اللي محدد له اشتراك خاص.</div>
+    </div>
+    <button class="btn btn-primary" id="saveSettings">حفظ الأسعار</button>
+  </div>
+
+  <div class="section-title">إجمالي الشهر</div>
+  <div id="totals"></div>
+
+  <div class="section-title">تحصيل آخر ٦ شهور</div>
+  <div class="card" id="trend"></div>
+
+  <div class="section-title">خصومات واشتراكات خاصة</div>
+  <div class="card" id="playersBox"></div>
+
+  <div class="section-title">تذكير المتأخرين</div>
+  <div class="card" id="reminders"></div>
+
+  <div class="section-title">تقارير</div>
+  <div class="card">
+    <div class="sheet-actions" style="margin-top:0">
+      <a class="btn btn-ghost small" id="reportLink" href="/report/" target="_blank" rel="noopener">تقرير للطباعة</a>
+      <a class="btn btn-ghost small" id="exportLink" href="/export/">تحميل Excel / CSV</a>
+    </div>
+  </div>
+
+  <div style="height:30px"></div>
+</main>
+{% endblock %}

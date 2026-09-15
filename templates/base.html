@@ -1,0 +1,24 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
+  <meta name="theme-color" content="#191817">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>{% block title %}نادي الكونغ فو{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body data-page="{% block page %}{% endblock %}" data-year="{{ year }}" data-month="{{ month }}">
+
+{% block body %}{% endblock %}
+
+<div id="toast"></div>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet"></div>
+
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

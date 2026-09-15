@@ -1,0 +1,51 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تقرير {{ payload.month.label }} — {{ payload.settings.club_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="report">
+<div class="shell">
+
+  <div class="no-print" style="display:flex;gap:9px;margin-bottom:20px">
+    <a class="btn btn-ghost small" href="/settings/">رجوع</a>
+    <button class="btn btn-dark small" onclick="window.print()">طباعة / حفظ PDF</button>
+    <a class="btn btn-ghost small" href="/export/?year={{ payload.month.year }}&amp;month={{ payload.month.month }}">تحميل CSV</a>
+  </div>
+
+  <h1>{{ payload.settings.club_name }}</h1>
+  <div class="meta">
+    تقرير اشتراكات {{ payload.month.label }} · اشتراك الشهر {{ payload.settings.monthly_fee }} {{ payload.settings.currency }}
+    · الحصة {{ payload.settings.session_fee }} {{ payload.settings.currency }} · طُبع في {{ printed_at }}
+  </div>
+
+  {% if juniors %}
+  <h2 style="font-size:16px;margin:0 0 8px">الصغار</h2>
+  {% include "_report_table.html" with rows=juniors %}
+  {% endif %}
+
+  {% if seniors %}
+  <h2 style="font-size:16px;margin:0 0 8px">الكبار</h2>
+  {% include "_report_table.html" with rows=seniors %}
+  {% endif %}
+
+  <h2 style="font-size:16px;margin:26px 0 8px">الإجمالي العام</h2>
+  <table class="tbl">
+    <thead>
+      <tr><th>عدد اللاعبين</th><th>المطلوب</th><th>المحصّل</th><th>المتبقي</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num">{{ payload.totals.count }}</td>
+        <td class="num">{{ payload.totals.due }}</td>
+        <td class="num jade-text">{{ payload.totals.paid }}</td>
+        <td class="num red-text">{{ payload.totals.remaining }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
